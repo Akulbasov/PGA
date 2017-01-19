@@ -21,7 +21,12 @@ import re
 
 
 class Product(object):
-    ## Version and Name Product
+    
+
+    # Class for manipulation with products attributes (CVS,Google Analytics)
+    # In future if needed add support CV4
+    
+
     def __init__(self):
         
         self.__settings_products = pd.DataFrame([])
@@ -78,6 +83,9 @@ class Product(object):
 
 
 class Connection(object):
+
+    # Base Class for authorize and connect
+    # Support server and client authorize 
     
     def __init__(self,key_file_location,type_of_connection):
 
@@ -131,6 +139,8 @@ class Connection(object):
 
 
 class Batch(object):
+
+    # Class for bathing manipulation via batch Google Library 
     
     def __init__(self):
         
@@ -158,8 +168,6 @@ class Batch(object):
         if response == None:
             print(exception)
             return False
-        # print('Exception ____call_back_bathing_all_day =',exception)
-        # print('Request id ____call_back_bathing_all_day',request_id)
         self._set_total_raw(request_id,response.get('totalResults'))
         return self.__add_frame(response)
 
@@ -167,8 +175,6 @@ class Batch(object):
         if response == None:
             print(exception)
             return False
-        # print('Exception __call_back_bathing_all_day_all_page =',exception)
-        # print('Request id __call_back_bathing_all_day_all_page',request_id)
         return self.__add_frame(response)
 
 
@@ -212,10 +218,7 @@ class Batch(object):
         return self
 
     def __execute_batching(self):
-        # time.sleep(0.5)
-        # print('Executing Batching API')
         self.bathing.execute(http=httplib2.Http())
-        # print('Executing Batching API__')
         return self
 
     def _main_alogrithm_batching(self,dayall,analytics):
@@ -227,17 +230,12 @@ class Batch(object):
             print(day_chunk_split)
             for day in day_chunk_split:
                 day['pagetoken']=0
-                # print(day)
                 self.add_settings_request(**day)
                 frr = self._fill_raw_request(analytics)
-                # print(self.bathing._serialize_request(frr))
                 self.__add_batching(cb=self.__call_back_bathing_all_day,request=frr,request_id=day['start_date']+'_'+day['end_date'])
-            # print('This<--------------------')
             self.__execute_batching()
 
         if self._get_total_raw():
-            # print('Total row is TRUE')
-            # self.__create_batching(analytics)    
             day_and_pagetoken_all = self._get_numpy_list_day_with_over_row(self._get_total_raw())
             day_and_pagetoken_chunk = self._split_numpy(day_and_pagetoken_all)
             for day_and_pagetoken_chunk_split in day_and_pagetoken_chunk:
@@ -252,12 +250,9 @@ class Batch(object):
                     }
                     self.add_settings_request(**day)
                     frr = self._fill_raw_request(analytics)
-                    # print(self.bathing._serialize_request(frr))
                     self.__add_batching(cb=self.__call_back_bathing_all_day_all_page,request=frr,request_id=None)
-                # print('That<--------------------')
                 self.__execute_batching()
-            # elapsed = (time.clock() - start_time)
-            # print('Tinme this Query',elapsed)
+
 
 
 
@@ -265,6 +260,8 @@ class Batch(object):
 
 
 class ExtraAppsMetaCdm(object):
+
+    # Class for find dimension and metrics name, type, status, desription   
     
     def __init__(self):
         
@@ -295,18 +292,11 @@ class ExtraAppsMetaCdm(object):
 
 
 class ExtraAppsManagementApi(object):
+
+    # Class for get all account, property and view Google Analytics for easy to use in CV3 request   
     
     def __init__(self):
-    
-    
-        # self.__settings_all_profiles = pd.DataFrame(self._get_now_schema_profiles())
-        # self.__settings_all_property = pd.DataFrame(self._get_now_schema_property())
-        # self.__settings_all_accounts = pd.DataFrame(self._get_now_schema_accounts())
-        # merge_profiles_and_property = pd.merge(self.__settings_all_profiles, self.__settings_all_property,how='inner',on='Property ID')
-        # merge_profiles_and_property_and_account = pd.merge(merge_profiles_and_property,self.__settings_all_accounts,how='inner',on='Account ID')
-        # return merge_profiles_and_property_and_account
-
-
+        
         self.__settings_all_profiles =  pd.DataFrame([])
         self.__analytics = self._execute_settings_connect()._get_analytics_connect()
 
@@ -363,6 +353,8 @@ class ExtraAppsManagementApi(object):
 
 
 class Request(Batch):
+
+    # Class for generate CV3 request and get chunk of start_date, end_date, start_index
     
     def __init__(self,facet_chunk,count_day_slice,pagesize=10000,pagetoken=0):
     
@@ -448,7 +440,6 @@ class Request(Batch):
 
     def _set_total_raw(self,day,total):
         self.verify+=total
-        # print(self.verify)
         if total > self.get_settings_request('pagesize'):
             self.total_raw.append({'day':day,'total':[element for element in range(self.get_settings_request('pagesize'),total,self.get_settings_request('pagesize'))]})
         return self
@@ -509,6 +500,8 @@ class Request(Batch):
 
 
 class PandasEvents(object):
+
+     # Class for set type columns and groupby date 
     
     def __init__(self,metric,dimension,groupby,cv3_main_frame_object=None):
         
@@ -560,6 +553,8 @@ class PandasEvents(object):
 
 class PGA(Product,PandasEvents,Connection,Request,ExtraAppsMetaCdm,ExtraAppsManagementApi):
     
+    # Main class with all public method
+
     __metaclass__ = ABCMeta
     
     def __init__(self,key_file_location=None,type_of_connection=None,facet_chunk=10,count_day_slice=1):

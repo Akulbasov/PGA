@@ -542,7 +542,10 @@ class PandasEvents(object):
     def __groupby_cv3_df(self,df):
         df.drop(['start-date','end-date','start-index'],inplace=True,axis=1)
         df = df.set_index(self.__dimension_gua_name)
-        df = df.groupby(level=self.__dimension_gua_name).agg(self.__aggr_json)
+        if len(self.__dimension_gua_name) == 1:
+            df = df.groupby(level=self.__dimension_gua_name[0]).agg(self.__aggr_json)
+        else:
+            df = df.groupby(level=self.__dimension_gua_name).agg(self.__aggr_json)
         return df.reset_index()
 
 

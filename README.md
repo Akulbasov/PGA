@@ -42,7 +42,7 @@ You may choose the following types of Client ID :
 
 ### PGA.__init__
 
-![image alt text](image_0.png)
+![pga_init](https://cloud.githubusercontent.com/assets/13867414/22373491/22a785e4-e4b3-11e6-95d3-a3c39a270470.png)
 
 **PGA.__init__(key_file_location=None,type_of_connection=None,facet_chunk=10,count_day_slice=1)**
 
@@ -82,7 +82,7 @@ After apply constructor will be create the instance, and redirect the client to 
 
 Simply add request in an already instantiated object pga
 
-![image alt text](image_1.png)
+![request add](https://cloud.githubusercontent.com/assets/13867414/22373492/22afad3c-e4b3-11e6-8d9f-2adee9d8ff39.png)
 
 ### Request.add_settings_request
 
@@ -102,13 +102,13 @@ return self with current behavior.</td>
 </table>
 
 
-You can update any already used query parameters later with the following method, and make new request. ![image alt text](image_2.png)
+You can update any already used query parameters later with the following method, and make new request. ![image alt text]![reqest add 2](https://cloud.githubusercontent.com/assets/13867414/22373493/22b0fb2e-e4b3-11e6-8c65-69841cf115bc.png)
 
 ## **Execute DataFram****e**
 
 Execute all settings for get DataFrame
 
-![image alt text](image_3.png)
+![execute all settings](https://cloud.githubusercontent.com/assets/13867414/22373488/226c389a-e4b3-11e6-84f8-5b8461cc5e2c.png)
 
 ### PGA.get_dataframe
 
@@ -171,7 +171,7 @@ Print all current product settings pga
 
 Lookup through metadata of Google Analytics dimensions and metrics:
 
-![image alt text](image_4.png)
+![extraappsmetacdm](https://cloud.githubusercontent.com/assets/13867414/22373490/22a399c0-e4b3-11e6-9085-50b9df46534a.png)
 
 ### ExtraAppsMetaCdm.get_list_cdcm
 
@@ -194,7 +194,7 @@ Specifying the attribute on which the selection will be dimensions and metris</t
 
 Get the list of Google Universal Analytics (Account ID, Property id, View id) objects, you have an access to.
 
-![image alt text](image_5.png)
+![extraappsmanagementapi](https://cloud.githubusercontent.com/assets/13867414/22373489/22991aea-e4b3-11e6-8e70-86d7385d53f6.png)
 
 ### PGA.get_all_profile
 

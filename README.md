@@ -2,7 +2,7 @@
 
 This is a library for making batch request to Google Analytics Core Reporting v3 API and extracting data from Google Analytics property into Python 3 data structures.
 
-The package uses 
+<b>The package uses</b> 
 
 * OAuth 2.0 (protocol) client or server access to Google Analytics API (oauth2client==3.0.0) - for connection to Google Analytics
 
@@ -12,7 +12,7 @@ The package uses
 
 * Management API Google Analytics - to get View, Property and Account tree. 
 
-Dependency:
+<b>Dependency:</b>
 
 * Pandas > 0.13.0 - for transformation data into pandas DataFrame object 
 
@@ -20,7 +20,7 @@ Dependency:
 
 * google-api-python-client > 1.5.0 - self explanatory 
 
-Best practices usage:
+<b>Best practices usage:</b>
 
 * Interactive shell [Jupyter ](http://jupyter.org/)for analyzing data
 

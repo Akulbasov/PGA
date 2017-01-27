@@ -1,4 +1,4 @@
-# **Python Google Analytics Library (Core Reporting API v3 support)**
+# **Python Google Analytics Library <br>(Core Reporting API v3 support)**
 
 This is a library for making batch request to Google Analytics Core Reporting v3 API and extracting data from Google Analytics property into Python 3 data structures.
 

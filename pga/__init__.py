@@ -9,12 +9,12 @@ from oauth2client import file
 from oauth2client import tools
 import datetime
 import pandas as pd
-import json 
+import json
 import pickle as pickle
 import string
 import urllib.request
 import numpy as np
-import time     
+import time
 import re
 
 
@@ -128,12 +128,39 @@ class Connection(object):
         # Аутентификация и создание службы.
         
         http = credentials.authorize(http=httplib2.Http())
+        credentials.refresh(http)
         self.__analytics_connect = build(self.get_all_products('product_api'), self.get_all_products('product_version'), http=http)
         return self
     
     def _get_analytics_connect(self):
         return self.__analytics_connect
 
+
+class StorageArchitecture(object):
+    def __init__(self,save_type):
+        
+        self.st = save_type
+        self.dir_name = 'minibatch/'
+        self.fname = 'mnb.dat'
+
+    def write_to_st(self,fn,dir_name,data):
+        self.fname = fn
+        self.dir = dir_name
+        if self.st=='memory':
+            # with open(self.dir_name+self.fn, "a+") as outfile:
+            #     json.dump(data, outfile, indent=4)
+            with open(self.dir_name+self.fn, 'ab') as file:
+                pickle.dump(data, file, pickle.HIGHEST_PROTOCOL)
+
+    def read_st(self,fn,dir_name):
+        if self.st=='memory':
+            # return pickle.load( open( self.dir_name+self.fn, "rb" ) )
+            with open(self.dir_name+self.fn, 'rb') as file:
+                try:
+                    while True:
+                        yield pickle.load(file)
+                except EOFError:
+                    pass
 
 
 class Batch(object):
@@ -163,6 +190,7 @@ class Batch(object):
 
 
     def __call_back_bathing_all_day(self,request_id, response, exception):
+        # print('test')
         if response == None:
             print(exception)
             return False
@@ -170,6 +198,7 @@ class Batch(object):
         return self.__add_frame(response)
 
     def __call_back_bathing_all_day_all_page(self,request_id, response, exception):
+        # print('test')
         if response == None:
             print(exception)
             return False
@@ -209,15 +238,18 @@ class Batch(object):
 
     def __create_batching(self,system):
         self.bathing = system.new_batch_http_request()
-        return self
+        return self.bathing
 
     def __add_batching(self,cb,request,request_id):
         self.bathing.add(callback=cb,request=request,request_id=request_id)
-        return self
+        return self.bathing
 
     def __execute_batching(self):
+        # time.sleep(0.5)
+        print('execute')
+        # print(system)
         self.bathing.execute(http=httplib2.Http())
-        return self
+        return self.bathing
 
     def _main_alogrithm_batching(self,dayall,analytics):
         day_chunk = self._split_numpy(dayall)      
